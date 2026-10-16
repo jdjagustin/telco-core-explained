@@ -24,7 +24,9 @@ Status: done = `[x]`, pending = `[ ]`. This file is updated in the same commit t
 - [ ] 4G equivalents table (eNodeB, MME, HSS)
 - [x] Scenario: the AMF is overloaded and the platform cannot create more instances (two items to verify against clause text, see its accuracy note)
 - [ ] Scenario: a subset of subscribers cannot register
-- [ ] Verify every message name and clause number against the specs one last time
+- [x] Central source table (`docs/references.md`) and clause links in the text
+- [ ] Close the items marked with a dagger in `docs/references.md` (AMF Configuration Update and relative AMF capacity, AMF Set clauses, Relative AMF Capacity IE)
+- [ ] Verify every message name and clause number against the official 3GPP documents one last time
 
 ## Cross-cutting
 

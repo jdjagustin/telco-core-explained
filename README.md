@@ -53,3 +53,4 @@ Message names, timers and cause codes are verified against the specifications be
 Topic-specific references are listed at the end of each topic page.
 - Glossary: [docs/glossary.md](docs/glossary.md)
 - Roadmap: [ROADMAP.md](ROADMAP.md)
+- Sources: [docs/references.md](docs/references.md)

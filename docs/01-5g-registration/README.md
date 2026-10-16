@@ -148,14 +148,15 @@ Failure behaviour (what a UE sees when a step fails) is specified through cause 
 ## References
 
 - [**3GPP**](../glossary.md#3gpp) specs, each a [**TS**](../glossary.md#ts): archive at <https://www.3gpp.org/ftp/Specs/archive/>
-  - TS 23.501, *System architecture for the 5G System*: functions and reference points (clause 4.2.7).
-  - TS 23.502, *Procedures for the 5G System*: registration procedure (clause 4.2.2.2.2).
+  - TS 23.501, *System architecture for the 5G System*: functions and reference points ([clause 4.2.7](https://itecspec.com/3gpp/23.501/s/4.2.7)).
+  - TS 23.502, *Procedures for the 5G System*: registration procedure ([clause 4.2.2.2.2](https://itecspec.com/3gpp/23.502/s/4.2.2.2.2)).
   - TS 24.501, *NAS protocol for 5G*: NAS messages.
-  - TS 33.501, *Security architecture and procedures for 5G*: SUCI/SUPI, 5G AKA, EAP-AKA' (clauses 6.1.2, 6.1.3).
-  - TS 38.413, *NG-AP*: Initial UE Message (clause 8.6.1).
-  - TS 38.412, *NG signalling transport*: SCTP as the transport of N2 (clause 7).
+  - TS 33.501, *Security architecture and procedures for 5G*: SUCI/SUPI, 5G AKA, EAP-AKA' (clauses [6.1.2](https://itecspec.com/3gpp/33.501/s/6.1.2), [6.1.3](https://itecspec.com/3gpp/33.501/s/6.1.3)).
+  - TS 38.413, *NG-AP*: Initial UE Message ([clause 8.6.1](https://itecspec.com/3gpp/38.413/s/8.6.1)).
+  - TS 38.412, *NG signalling transport*: SCTP as the transport of N2 ([clause 7](https://itecspec.com/3gpp/38.412/s/7)).
   - TS 38.331, *NR; Radio Resource Control (RRC) protocol specification*: RRC and the transfer of NAS messages.
-  - TS 29.500, *Technical realization of the Service Based Architecture*: HTTP/2 over TCP (clause 5.3), JSON (clause 5.4), transport security (clause 6.7.2).
+  - TS 29.500, *Technical realization of the Service Based Architecture*: HTTP/2 over TCP ([clause 5.3](https://itecspec.com/3gpp/29.500/s/5.3)), JSON ([clause 5.4](https://itecspec.com/3gpp/29.500/s/5.4)), transport security ([clause 6.7.2](https://itecspec.com/3gpp/29.500/s/6.7.2)).
   - TS 29.501, *Principles and guidelines for services definition*: OpenAPI and JSON conventions of the service APIs.
+- All sources of the repository: [references](../references.md).
 - IETF: [RFC 4960](https://www.rfc-editor.org/rfc/rfc4960) (SCTP), [RFC 9113](https://www.rfc-editor.org/rfc/rfc9113) (HTTP/2), [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259) (JSON).
 - Clause numbers refer to the releases checked when writing; they can move between releases.

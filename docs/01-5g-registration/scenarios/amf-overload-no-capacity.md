@@ -20,8 +20,8 @@ Back to [topic 01](../README.md). Terms link to the [glossary](../../glossary.md
 2. Nothing reaches the AUSF, because the AMF only calls it after receiving and processing the request (see the flow in [topic 01](../README.md)).
 3. The HPA asks for more replicas, but the scheduler cannot place them: pods stay `Pending`.
 4. The network has built-in ways to slow the load down:
-   - The AMF can tell a gNB to reduce signalling towards it with the NGAP **Overload Start** procedure (TS 38.413, clause 8.7.7).
-   - The AMF can reject NAS requests with 5GMM cause #22 (*congestion*) and a back-off timer, [**T3346**](../../glossary.md#t3346), so that UEs wait before retrying (TS 24.501, clause 5.3.9). The spec suggests varied timer values so the UEs do not retry all at once.
+   - The AMF can tell a gNB to reduce signalling towards it with the NGAP **[Overload Start](https://itecspec.com/3gpp/38.413/s/8.7.7)** procedure ([TS 38.413, clause 8.7.7](https://itecspec.com/3gpp/38.413/s/8.7.7)).
+   - The AMF can reject NAS requests with 5GMM cause #22 (*congestion*) and a back-off timer, [**T3346**](../../glossary.md#t3346), so that UEs wait before retrying ([TS 24.501, clause 5.3.9](https://itecspec.com/3gpp/24.501/s/5.3.9)). The spec suggests varied timer values so the UEs do not retry all at once.
 
 ```mermaid
 sequenceDiagram
@@ -123,11 +123,12 @@ Also check the AMF logs and the N2 association state on the AMF side.
 
 ## Accuracy note
 
-Checked against the specs: Overload Start purpose (TS 38.413 cl. 8.7.7) and the congestion handling with cause #22 and T3346 (TS 24.501 cl. 5.3.9). Not yet checked against the clause text (†): that the AMF Configuration Update procedure (TS 38.413 cl. 8.7.3) is the one that changes the relative weight of an AMF, and the exact clauses of the AMF Set and AMF selection rules in TS 23.501.
+Checked against the specs: Overload Start purpose ([TS 38.413 cl. 8.7.7](https://itecspec.com/3gpp/38.413/s/8.7.7)) and the congestion handling with cause #22 and T3346 ([TS 24.501 cl. 5.3.9](https://itecspec.com/3gpp/24.501/s/5.3.9)). Not yet checked against the clause text (†): that the AMF Configuration Update procedure ([TS 38.413 cl. 8.7.3](https://itecspec.com/3gpp/38.413/s/8.7.3)) is the one that changes the relative weight of an AMF, and the exact clauses of the AMF Set and AMF selection rules in TS 23.501.
 
 ## References
 
-- 3GPP TS 38.413, *NG-AP*: Overload Start (cl. 8.7.7), AMF Configuration Update (cl. 8.7.3), Relative AMF Capacity IE (cl. 9.3.1.32). <https://www.3gpp.org/ftp/Specs/archive/>
-- 3GPP TS 24.501, *NAS protocol for 5G*: NAS level congestion control (cl. 5.3.9).
+- 3GPP TS 38.413, *NG-AP*: Overload Start ([cl. 8.7.7](https://itecspec.com/3gpp/38.413/s/8.7.7)), AMF Configuration Update ([cl. 8.7.3](https://itecspec.com/3gpp/38.413/s/8.7.3)), Relative AMF Capacity IE ([cl. 9.3.1.32](https://itecspec.com/3gpp/38.413/s/9.3.1.32)). <https://www.3gpp.org/ftp/Specs/archive/>
+- 3GPP TS 24.501, *NAS protocol for 5G*: NAS level congestion control ([cl. 5.3.9](https://itecspec.com/3gpp/24.501/s/5.3.9)).
 - 3GPP TS 23.501, *System architecture for the 5G System*: AMF Set and AMF selection.
+- All sources of the repository: [references](../../references.md).
 - Kubernetes: [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), [Scheduling and eviction](https://kubernetes.io/docs/concepts/scheduling-eviction/), [kubectl reference](https://kubernetes.io/docs/reference/kubectl/).
