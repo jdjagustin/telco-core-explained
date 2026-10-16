@@ -40,6 +40,24 @@ The [**5GC**](../glossary.md#5gc) is built as a [**SBA**](../glossary.md#sba): e
 <a id="t-interfaces"></a>
 ### Interfaces used in this flow
 
+Who talks to whom, and over which reference point (order of messages is in the animated diagram above):
+
+```mermaid
+flowchart LR
+    UE["UE<br/>User Equipment"]
+    gNB["gNB<br/>next generation NodeB"]
+    AMF["AMF<br/>Access and Mobility<br/>Management Function"]
+    AUSF["AUSF<br/>Authentication<br/>Server Function"]
+    UDM["UDM<br/>Unified Data<br/>Management"]
+
+    UE -- "radio (RRC)" --- gNB
+    gNB -- "N2 (NGAP)" --- AMF
+    AMF -- "N12" --- AUSF
+    AUSF -- "N13" --- UDM
+    AMF -- "N8" --- UDM
+    UE -. "N1 (NAS, carried through the gNB)" .- AMF
+```
+
 | Reference point | Between | Carries |
 |---|---|---|
 | [**N1**](../glossary.md#n1) | UE – AMF | [**NAS**](../glossary.md#nas) signalling |
