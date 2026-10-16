@@ -19,7 +19,7 @@ Every topic combines three things:
 
 | # | Topic | Status |
 |---|-------|--------|
-| 01 | 5G registration (UE, gNB, AMF, AUSF, UDM, NRF) | planned |
+| 01 | [5G registration (UE, gNB, AMF, AUSF, UDM, NRF)](docs/01-5g-registration/README.md) | draft |
 | 02 | 5G PDU session establishment (SMF, UPF, PCF, PFCP) | planned |
 
 More topics are added as they are written, one branch and one pull request per topic.
@@ -51,3 +51,4 @@ Message names, timers and cause codes are verified against the specifications be
 - RFC 6733, Diameter Base Protocol: https://www.rfc-editor.org/rfc/rfc6733
 
 Topic-specific references are listed at the end of each topic page.
+- Glossary: [docs/glossary.md](docs/glossary.md)
