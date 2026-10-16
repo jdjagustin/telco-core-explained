@@ -4,6 +4,7 @@ Terms in **bold links** point to the [glossary](../glossary.md); each glossary r
 
 ## What you will learn
 
+- Which protocol carries each message on each hop.
 - What a UE must do before it can use a 5G network, and why it cannot send data yet.
 - Who the main functions are and which interface connects each pair.
 - The message sequence of an initial registration, simplified.
@@ -51,6 +52,17 @@ The [**5GC**](../glossary.md#5gc) is built as a [**SBA**](../glossary.md#sba): e
 ### Three signalling layers, one message
 
 The Registration Request is a [**NAS**](../glossary.md#nas) message for the AMF. On the radio hop it rides inside [**RRC**](../glossary.md#rrc) (UE to gNB). The gNB then puts it inside an [**NGAP**](../glossary.md#ngap) message to the AMF. Same content, three envelopes.
+
+<a id="t-stack"></a>
+### Protocol stack per hop
+
+| Hop | Protocol stack | Notes |
+|---|---|---|
+| UE – gNB | [**RRC**](../glossary.md#rrc) over the radio interface | The [**NAS**](../glossary.md#nas) message is carried inside RRC. |
+| gNB – AMF ([**N2**](../glossary.md#n2)) | [**NGAP**](../glossary.md#ngap) over [**SCTP**](../glossary.md#sctp) over [**IP**](../glossary.md#ip) | The NAS message is carried inside NGAP. The NG-RAN node sets up the SCTP association with the AMF. |
+| AMF – AUSF ([**N12**](../glossary.md#n12)), AUSF – UDM ([**N13**](../glossary.md#n13)), AMF – UDM ([**N8**](../glossary.md#n8)), any NF – NRF | [**HTTP/2**](../glossary.md#http2) with [**JSON**](../glossary.md#json) bodies over [**TCP**](../glossary.md#tcp) | The service-based interfaces. The specs also define transport-layer protection ([**TLS**](../glossary.md#tls)); whether it is enabled depends on the deployment. |
+
+[**NAS**](../glossary.md#nas) is not a transport: it is the content that RRC and NGAP carry, which is why the gNB forwards it without reading it.
 
 <a id="t-ids"></a>
 ### Identities: SUPI, SUCI, 5G-GUTI
@@ -122,4 +134,9 @@ Planned for this topic (one page each in `scenarios/`): a subset of subscribers 
   - TS 24.501, *NAS protocol for 5G*: NAS messages.
   - TS 33.501, *Security architecture and procedures for 5G*: SUCI/SUPI, 5G AKA, EAP-AKA' (clauses 6.1.2, 6.1.3).
   - TS 38.413, *NG-AP*: Initial UE Message (clause 8.6.1).
+  - TS 38.412, *NG signalling transport*: SCTP as the transport of N2 (clause 7).
+  - TS 38.331, *NR; Radio Resource Control (RRC) protocol specification*: RRC and the transfer of NAS messages.
+  - TS 29.500, *Technical realization of the Service Based Architecture*: HTTP/2 over TCP (clause 5.3), JSON (clause 5.4), transport security (clause 6.7.2).
+  - TS 29.501, *Principles and guidelines for services definition*: OpenAPI and JSON conventions of the service APIs.
+- IETF: [RFC 4960](https://www.rfc-editor.org/rfc/rfc4960) (SCTP), [RFC 9113](https://www.rfc-editor.org/rfc/rfc9113) (HTTP/2), [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259) (JSON).
 - Clause numbers refer to the releases checked when writing; they can move between releases.
