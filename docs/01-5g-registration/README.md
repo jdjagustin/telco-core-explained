@@ -141,7 +141,8 @@ Failure behaviour (what a UE sees when a step fails) is specified through cause 
 
 ## Scenarios
 
-Planned for this topic (one page each in `scenarios/`): a subset of subscribers cannot register; the AMF is overloaded and the platform cannot create more instances.
+- [The AMF is overloaded and the platform cannot create more instances](scenarios/amf-overload-no-capacity.md)
+- Planned: a subset of subscribers cannot register.
 
 <a id="t-refs"></a>
 ## References

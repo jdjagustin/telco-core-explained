@@ -22,7 +22,7 @@ Status: done = `[x]`, pending = `[ ]`. This file is updated in the same commit t
 - [x] Glossary with back-links
 - [x] Interface map (Mermaid)
 - [ ] 4G equivalents table (eNodeB, MME, HSS)
-- [ ] Scenario: the AMF is overloaded and the platform cannot create more instances
+- [x] Scenario: the AMF is overloaded and the platform cannot create more instances (two items to verify against clause text, see its accuracy note)
 - [ ] Scenario: a subset of subscribers cannot register
 - [ ] Verify every message name and clause number against the specs one last time
 
