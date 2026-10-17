@@ -36,12 +36,13 @@ sequenceDiagram
     gNB->>AMF: Initial UE Message (N2)
     Note over AMF: 1. does it arrive at all?
     AMF->>NRF: discover AUSF (HNI, Routing Indicator)
-    Note over AMF,NRF: 2. is there an AUSF for this SUCI?
+    Note over AMF,NRF: 2. is there an AUSF for this SUCI? (skipped if the answer is saved)
     AMF->>AUSF: authentication request (N12)
     Note over AMF,AUSF: 3. seen on N12?
     AUSF->>UDM: resolve SUCI, get auth data (N13)
     Note over AUSF,UDM: 4. subscriber and key found?
-    AMF-->>UE: challenge, or Authentication Reject
+    AMF-->>gNB: challenge, or Authentication Reject (N2)
+    gNB-->>UE: same message (RRC)
     Note over UE: 5. does the UE answer correctly?
 ```
 
@@ -97,10 +98,10 @@ tcpdump -i any -w /tmp/n2.pcap sctp
 | Hypothesis | Evidence that supports it |
 |---|---|
 | Different Routing Indicator (for example a new SIM batch) and no AUSF serves it † | Failing SUCIs carry a value that working ones do not; the AMF logs no AUSF found, and there is no request on N12 |
-| Different Home Network Identifier (another PLMN id) not covered by the core configuration | Failing SUCIs show another MCC/MNC; same symptom as above |
+| Less likely: a different Home Network Identifier (a second network code used by a subset of SIMs) not covered by the core configuration | Failing SUCIs show another MCC/MNC. For plain home subscribers this is unusual: a different home network usually means roaming, which goes through other functions |
 | Home Network Public Key Id or protection scheme not provisioned, so the SUCI cannot be decrypted † | Request reaches the UDM side, but the SUCI cannot be resolved |
 | Subscriber missing in the UDM database | Request reaches the UDM; lookup fails for those subscribers only |
-| Wrong key or algorithm on the SIM | Challenge is issued, the UE's answer does not match; Authentication Reject for UEs that sent a SUCI |
+| Wrong key or algorithm on the SIM | Challenge is issued but authentication does not complete. The UE may detect the mismatch itself and report a failure, or its answer may not match; which message results is not yet verified in the specs † |
 | The request never reaches the AMF | No Initial UE Message in the AMF for those UEs; look at the UE configuration, radio access, the gNB or the N2 path |
 
 ## Mitigate now vs. fix the root cause
