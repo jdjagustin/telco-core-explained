@@ -32,7 +32,8 @@ sequenceDiagram
     gNB->>AMF: Initial UE Message (N2)
     Note over AMF: overloaded: slow or no answer
     AMF-->>gNB: Overload Start (reduce signalling)
-    AMF-->>UE: Registration Reject, cause 22 (congestion) + T3346
+    AMF-->>gNB: Registration Reject, cause 22 + T3346 (N2)
+    gNB-->>UE: Registration Reject (RRC)
     Note over UE: waits for T3346, then retries
 ```
 

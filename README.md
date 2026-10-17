@@ -1,6 +1,6 @@
 # telco-core-explained
 
-A visual, step-by-step guide to mobile core networks (5G Core and 4G EPC): what each network function does, how the main procedures flow, how they break, and how to troubleshoot them.
+A visual, step-by-step guide to mobile core networks (it starts with the 5G Core; the 4G EPC is planned): what each network function does, how the main procedures flow, how they break, and how to troubleshoot them.
 
 Every topic combines three things:
 
@@ -11,7 +11,7 @@ Every topic combines three things:
 ## How to read this repo
 
 - Start with the topics in order; each one builds on the previous.
-- Acronyms keep their English expansion on first use in every page (for example, AMF = Access and Mobility Management Function).
+- Acronyms are kept in English. In the pages each one links to the [glossary](docs/glossary.md), which gives the English expansion (for example, AMF = Access and Mobility Management Function).
 - Every page separates what a **3GPP standard defines** from what is **implementation or vendor specific**.
 - Every topic ends with its own references section.
 
@@ -37,7 +37,7 @@ docs/
 
 ## Accuracy note
 
-Message names, timers and cause codes are verified against the specifications before they are written down. If something here disagrees with the current spec, the spec wins; please open an issue.
+Message names, timers and cause codes are being checked against the 3GPP specifications. [references](docs/references.md) lists, for each source, whether it was **checked**, **partly checked** (†, read through a reader summary) or **title only**. Pages mark partly checked statements with †. If something here disagrees with the current spec, the spec wins; please open an issue.
 
 ## References and credits
 
