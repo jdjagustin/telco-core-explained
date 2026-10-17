@@ -35,7 +35,7 @@ The [**5GC**](../glossary.md#5gc) is built as a [**SBA**](../glossary.md#sba): e
 - [**UDM**](../glossary.md#udm): holds the subscriber data and the key material.
 
 <a id="t-nrf"></a>
-- [**NRF**](../glossary.md#nrf): the phone book. Before the AMF calls the AUSF or the UDM it finds them through the NRF. The NRF is not drawn in the diagram to keep it readable, but it is used in every step that starts a call between two NFs.
+- [**NRF**](../glossary.md#nrf): the phone book. When the AMF needs an AUSF or a UDM it finds one through the NRF. The NRF is not drawn in the diagram to keep it readable. The AMF does not ask it on every registration: the NRF's answer says how long it can be kept ([TS 23.501 cl. 6.3.1](https://itecspec.com/3gpp/23.501/s/6.3.1), [TS 29.510 cl. 6.2.6.2.2](https://itecspec.com/3gpp/29.510/s/6.2.6.2.2)) †, so it asks again only when it has no valid saved answer. An instance can also be configured locally, without the NRF.
 
 <a id="t-interfaces"></a>
 ### Interfaces used in this flow
@@ -93,7 +93,7 @@ The permanent identity is the [**SUPI**](../glossary.md#supi). To avoid sending 
 1. **Registration Request.** The UE sends it (NAS) to the gNB over RRC. It carries the SUCI (or a temporary identity if it has one).
 2. **Initial UE Message.** The gNB cannot read the NAS content. It forwards it to an AMF over N2 in an NGAP *Initial UE Message*. The gNB selects the AMF; the AMF may later redirect the UE to a more suitable one.
 3. **Authentication request towards the AUSF.** The AMF calls `Nausf_UEAuthentication_Authenticate` on the AUSF with the SUCI and the serving network name. The AUSF calls `Nudm_UEAuthentication_Get` on the UDM, which de-conceals the SUCI to the SUPI, selects the method and returns the authentication data.
-4. **Challenge and NAS security.** The AMF sends an Authentication Request to the UE; the UE checks it with its SIM and answers. The AMF (with the AUSF) verifies the answer. Then the AMF sends a Security Mode Command and the UE confirms. From here NAS messages are protected.
+4. **Challenge and NAS security.** The AMF sends an Authentication Request to the UE; the UE checks it with its SIM and answers. The AMF and the AUSF both verify the answer; if it fails and the UE had sent a SUCI, the AMF sends an Authentication Reject ([TS 33.501 cl. 6.1.3.2.2](https://itecspec.com/3gpp/33.501/s/6.1.3.2.2)) †. Then the AMF sends a Security Mode Command and the UE confirms. From here NAS messages are protected.
 5. **Registration with the UDM.** The AMF registers itself as the serving AMF (`Nudm_UECM_Registration`) and reads the subscription (`Nudm_SDM_Get`, with `Nudm_SDM_Subscribe` to be told about changes). Optionally it also fetches an access and mobility policy from the [**PCF**](../glossary.md#pcf).
 6. **Registration Accept.** The AMF answers with Registration Accept, including a 5G-GUTI, and the UE replies with Registration Complete.
 
@@ -111,7 +111,7 @@ The animated diagram shows these explanations when you hover an arrow, but only 
 | 5 | Authentication data (UDM to AUSF) | The UDM answers with the SUPI and an authentication vector for the selected method. The vector contains the challenge for the SIM and the value expected back. |
 | 6 | Authentication data (AUSF to AMF) | The AUSF passes the challenge to the AMF (in 5G AKA it keeps the expected result to check the UE's reply later). The AMF now has what it needs to challenge the UE. |
 | 7 | Authentication Request (AMF to UE, N1) | The challenge reaches the UE as a NAS message through the gNB. The SIM computes an answer. The SIM also checks the challenge is genuine, so the UE verifies the network too (mutual authentication). |
-| 8 | Authentication Response (UE to AMF) | The UE returns its answer. If it matches what the network expects, the UE is authenticated. A wrong answer ends in a registration failure. This is where a bad SIM or key mismatch shows up. |
+| 8 | Authentication Response (UE to AMF) | The UE returns its answer. If it matches what the network expects, the UE is authenticated. A wrong answer ends in an Authentication Reject (if the UE sent a SUCI). A bad SIM or key shows up here. |
 | 9 | Security Mode Command (AMF to UE) | The AMF tells the UE which NAS integrity and ciphering algorithms to use. From the next NAS message on, signalling between UE and AMF is protected. |
 | 10 | Security Mode Complete (UE to AMF) | The UE confirms and applies the chosen algorithms. Security context established: the AMF can now trust and protect the signalling. |
 | 11 | Nudm_UECM_Registration + Nudm_SDM_Get (AMF to UDM, N8) | UECM = UE Context Management: the AMF tells the UDM it is the serving AMF for this UE. SDM = Subscriber Data Management: it reads the subscription. Nudm_SDM_Subscribe (not drawn) asks the UDM to notify the AMF if the subscription changes. |
@@ -148,15 +148,17 @@ Failure behaviour (what a UE sees when a step fails) is specified through cause 
 ## References
 
 - [**3GPP**](../glossary.md#3gpp) specs, each a [**TS**](../glossary.md#ts): archive at <https://www.3gpp.org/ftp/Specs/archive/>
-  - TS 23.501, *System architecture for the 5G System*: functions and reference points ([clause 4.2.7](https://itecspec.com/3gpp/23.501/s/4.2.7)).
+  - TS 23.501, *System architecture for the 5G System*: functions and reference points ([clause 4.2.7](https://itecspec.com/3gpp/23.501/s/4.2.7)); NF discovery with the NRF ([clause 6.3.1](https://itecspec.com/3gpp/23.501/s/6.3.1)) †.
   - TS 23.502, *Procedures for the 5G System*: registration procedure ([clause 4.2.2.2.2](https://itecspec.com/3gpp/23.502/s/4.2.2.2.2)).
   - TS 24.501, *NAS protocol for 5G*: NAS messages.
-  - TS 33.501, *Security architecture and procedures for 5G*: SUCI/SUPI, 5G AKA, EAP-AKA' (clauses [6.1.2](https://itecspec.com/3gpp/33.501/s/6.1.2), [6.1.3](https://itecspec.com/3gpp/33.501/s/6.1.3)).
+  - TS 33.501, *Security architecture and procedures for 5G*: SUCI/SUPI, 5G AKA, EAP-AKA' (clauses [6.1.2](https://itecspec.com/3gpp/33.501/s/6.1.2), [6.1.3](https://itecspec.com/3gpp/33.501/s/6.1.3)); failed authentication ([6.1.3.2.2](https://itecspec.com/3gpp/33.501/s/6.1.3.2.2)) †.
   - TS 38.413, *NG-AP*: Initial UE Message ([clause 8.6.1](https://itecspec.com/3gpp/38.413/s/8.6.1)).
   - TS 38.412, *NG signalling transport*: SCTP as the transport of N2 ([clause 7](https://itecspec.com/3gpp/38.412/s/7)).
   - TS 38.331, *NR; Radio Resource Control (RRC) protocol specification*: RRC and the transfer of NAS messages.
   - TS 29.500, *Technical realization of the Service Based Architecture*: HTTP/2 over TCP ([clause 5.3](https://itecspec.com/3gpp/29.500/s/5.3)), JSON ([clause 5.4](https://itecspec.com/3gpp/29.500/s/5.4)), transport security ([clause 6.7.2](https://itecspec.com/3gpp/29.500/s/6.7.2)).
+  - TS 29.510, *Network Function Repository Services*: the NRF discovery result and its validity period ([clause 6.2.6.2.2](https://itecspec.com/3gpp/29.510/s/6.2.6.2.2)) †.
   - TS 29.501, *Principles and guidelines for services definition*: OpenAPI and JSON conventions of the service APIs.
 - All sources of the repository: [references](../references.md).
 - IETF: [RFC 4960](https://www.rfc-editor.org/rfc/rfc4960) (SCTP), [RFC 9113](https://www.rfc-editor.org/rfc/rfc9113) (HTTP/2), [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259) (JSON).
 - Clause numbers refer to the releases checked when writing; they can move between releases.
+- † = partly checked against the clause text (read through a reader, not the official document). See [references](../references.md).
