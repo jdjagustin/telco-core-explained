@@ -101,7 +101,7 @@ tcpdump -i any -w /tmp/n2.pcap sctp
 | Less likely: a different Home Network Identifier (a second network code used by a subset of SIMs) not covered by the core configuration | Failing SUCIs show another MCC/MNC. For plain home subscribers this is unusual: a different home network usually means roaming, which goes through other functions |
 | Home Network Public Key Id or protection scheme not provisioned, so the SUCI cannot be decrypted † | Request reaches the UDM side, but the SUCI cannot be resolved |
 | Subscriber missing in the UDM database | Request reaches the UDM; lookup fails for those subscribers only |
-| Wrong key or algorithm on the SIM | Challenge is issued, the UE's answer does not match; Authentication Reject for UEs that sent a SUCI |
+| Wrong key or algorithm on the SIM | Challenge is issued but authentication does not complete. The UE may detect the mismatch itself and report a failure, or its answer may not match; which message results is not yet verified in the specs † |
 | The request never reaches the AMF | No Initial UE Message in the AMF for those UEs; look at the UE configuration, radio access, the gNB or the N2 path |
 
 ## Mitigate now vs. fix the root cause
