@@ -23,9 +23,11 @@ Status: done = `[x]`, pending = `[ ]`. This file is updated in the same commit t
 - [x] Interface map (Mermaid)
 - [ ] 4G equivalents table (eNodeB, MME, HSS)
 - [x] Scenario: the AMF is overloaded and the platform cannot create more instances (two items to verify against clause text, see its accuracy note)
-- [ ] Scenario: a subset of subscribers cannot register
+- [x] Scenario: a subset of subscribers cannot register (hypotheses on the SUCI fields are partly checked, see its accuracy note)
 - [x] Central source table (`docs/references.md`) and clause links in the text
 - [ ] Close the items marked with a dagger in `docs/references.md` (AMF Configuration Update and relative AMF capacity, AMF Set clauses, Relative AMF Capacity IE)
+- [ ] Check how GitHub renders the pages (Mermaid diagrams, glossary links, clause links)
+- [ ] Verify 5GMM cause values in TS 24.501 and add them to the scenarios that mention rejects
 - [ ] Verify every message name and clause number against the official 3GPP documents one last time
 
 ## Cross-cutting
